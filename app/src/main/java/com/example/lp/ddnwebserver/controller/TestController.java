@@ -23,6 +23,8 @@ import com.example.lp.ddnwebserver.model.UserInfo;
 import com.example.lp.ddnwebserver.util.FileUtils;
 import com.example.lp.ddnwebserver.util.Logger;
 import com.yanzhenjie.andserver.annotation.*;
+import com.yanzhenjie.andserver.framework.body.JsonBody;
+import com.yanzhenjie.andserver.framework.body.StringBody;
 import com.yanzhenjie.andserver.http.HttpRequest;
 import com.yanzhenjie.andserver.http.HttpResponse;
 import com.yanzhenjie.andserver.http.cookie.Cookie;
@@ -56,21 +58,29 @@ class TestController {
 
     //sing in按钮
     @PostMapping(path = "/login", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    String login(HttpRequest request, HttpResponse response, @RequestParam(name = "account") String account,
-                 @RequestParam(name = "password") String password) {
+    void login(HttpRequest request, HttpResponse response, @RequestParam(name = "account") String account,
+               @RequestParam(name = "password") String password, com.yanzhenjie.andserver.http.RequestBody str) throws IOException {
 
-        Log.e("login", "login: ");
-        Log.i("login", "getBody: "+request.getBody());
-        Log.i("login", "getParameter: "+request.getParameter());
-        Log.i("login", "getURI: "+request.getURI());
-
+        Log.e("login", "login:requestBody " + JSON.toJSONString(str.string()));
+        try {
+            Log.i("login", "getBody: " + request.getBody().string());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Log.i("login", "getParameter: " + request.getParameter());
+        Log.i("login", "JSON.toJSONString(getParameter): " + JSON.toJSONString(request.getParameter()));
+        Log.i("login", "getURI: " + request.getURI());
 
         Session session = request.getValidSession();
         session.setAttribute(LoginInterceptor.LOGIN_ATTRIBUTE, true);
 
         Cookie cookie = new Cookie("account", account + "=" + password);
         response.addCookie(cookie);
-        return "Login successful.";
+        String content = JSON.toJSONString(request.getParameter());
+        StringBody body = new StringBody(content);
+        response.setBody(body);
+        // return "Login successful.";
+        //return "forward:/login.html";
     }
 
     @Addition(stringType = "login", booleanType = true)
@@ -141,8 +151,10 @@ class TestController {
     }
 
     @PostMapping("/Submit")
-    public void info(HttpRequest request, HttpResponse response) {
-        request.getBody();
-        Log.e("info", request.toString());
+    void info(HttpRequest request, HttpResponse response) {
+            String content = JSON.toJSONString(request.getParameter());
+            StringBody body = new StringBody(content);
+            response.setBody(body);
+            Log.e("info", request.toString());
     }
 }

@@ -19,7 +19,9 @@ import com.yanzhenjie.andserver.annotation.Controller;
 import com.yanzhenjie.andserver.annotation.GetMapping;
 
 /**
- * Created by Zhenjie Yan on 2018/9/12.
+ * 页面转发
+ * lp
+ * 2019/07/30
  */
 @Controller
 public class PageController {

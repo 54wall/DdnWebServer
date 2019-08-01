@@ -25,7 +25,9 @@ import com.yanzhenjie.andserver.framework.website.AssetsWebsite;
 import java.io.File;
 
 /**
- * Created by Zhenjie Yan on 2019-06-30.
+ * 网页配置
+ * lp
+ * 2019/07/30
  */
 @Config
 public class AppConfig implements WebConfig {

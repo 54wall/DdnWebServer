@@ -16,6 +16,7 @@
 package com.example.lp.ddnwebserver.component;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.example.lp.ddnwebserver.util.JsonUtils;
 import com.yanzhenjie.andserver.annotation.Resolver;
@@ -32,6 +33,7 @@ import com.yanzhenjie.andserver.util.StatusCode;
  */
 @Resolver
 public class AppExceptionResolver implements ExceptionResolver {
+    private static final String  TAG="AppExceptionResolver";
 
     @Override
     public void onResolve(@NonNull HttpRequest request, @NonNull HttpResponse response, @NonNull Throwable e) {
@@ -42,6 +44,8 @@ public class AppExceptionResolver implements ExceptionResolver {
         } else {
             response.setStatus(StatusCode.SC_INTERNAL_SERVER_ERROR);
         }
+
+        Log.i(TAG, "onResolve: ");
         String body = JsonUtils.failedJson(response.getStatus(), e.getMessage());
         response.setBody(new JsonBody(body));
     }

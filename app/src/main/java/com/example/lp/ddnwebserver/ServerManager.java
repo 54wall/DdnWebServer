@@ -22,7 +22,9 @@ import android.content.IntentFilter;
 import android.util.Log;
 
 /**
- * Created by Zhenjie Yan on 2018/6/9.
+ * 服务管理器
+ * lp
+ * 2019/07/31
  */
 public class ServerManager extends BroadcastReceiver {
     private final static String TAG="ServerManager";
