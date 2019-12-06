@@ -31,6 +31,7 @@ import com.yanzhenjie.andserver.util.MultiValueMap;
 
 /**
  * 日志拦截器
+ * 拦截所有请求
  */
 @Interceptor
 public class LoggerInterceptor implements HandlerInterceptor {

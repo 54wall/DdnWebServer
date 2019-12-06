@@ -24,6 +24,7 @@
         <service
             android:name=".CoreService"
             android:exported="false"/>
+        <service android:name=".service.BindServiceTest"/>
     </application>
 
 </manifest>

@@ -18,9 +18,11 @@ package com.example.lp.ddnwebserver.controller;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.example.lp.ddnwebserver.component.LoginInterceptor;
 import com.example.lp.ddnwebserver.model.UserInfo;
 import com.example.lp.ddnwebserver.util.FileUtils;
+import com.example.lp.ddnwebserver.util.JsonUtils;
 import com.example.lp.ddnwebserver.util.Logger;
 import com.yanzhenjie.andserver.annotation.*;
 import com.yanzhenjie.andserver.framework.body.JsonBody;
@@ -42,7 +44,7 @@ import java.util.List;
  * lp
  * 2019/07/23
  */
-@RestController
+@Controller
 @RequestMapping(path = "/user")
 class TestController {
 
@@ -60,7 +62,8 @@ class TestController {
     @PostMapping(path = "/login", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     void login(HttpRequest request, HttpResponse response, @RequestParam(name = "account") String account,
                @RequestParam(name = "password") String password, com.yanzhenjie.andserver.http.RequestBody str) throws IOException {
-
+        JSONObject jsonObject = JsonUtils.request2Json(request);
+        Log.i("login", "jsonObject: "+JsonUtils.toJsonString(jsonObject));
         Log.e("login", "login:requestBody " + JSON.toJSONString(str.string()));
         try {
             Log.i("login", "getBody: " + request.getBody().string());
@@ -80,7 +83,7 @@ class TestController {
         StringBody body = new StringBody(content);
         response.setBody(body);
         // return "Login successful.";
-        //return "forward:/login.html";
+//        return "forward:/login.html";
     }
 
     @Addition(stringType = "login", booleanType = true)

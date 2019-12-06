@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 
+import com.example.lp.ddnwebserver.server.SetConfigServer;
 import com.example.lp.ddnwebserver.util.FileUtils;
 import com.yanzhenjie.andserver.util.IOUtils;
 
@@ -24,6 +25,8 @@ public class MyApplication extends Application {
             mInstance = this;
             initRootPath(this);
         }
+        //提前绑定服务，避免使用时才绑定崩溃
+        SetConfigServer.getInstance();
     }
 
     @NonNull

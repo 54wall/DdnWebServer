@@ -15,11 +15,18 @@
  */
 package com.example.lp.ddnwebserver.util;
 
+import android.util.Log;
+
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.example.lp.ddnwebserver.model.ReturnData;
+import com.yanzhenjie.andserver.http.HttpRequest;
+import com.yanzhenjie.andserver.util.MultiValueMap;
 
 
 import java.lang.reflect.Type;
+import java.util.Enumeration;
+import java.util.List;
 
 /**
  * Created by Zhenjie Yan on 2018/6/9.
@@ -79,5 +86,22 @@ public class JsonUtils {
      */
     public static <T> T parseJson(String json, Type type) {
         return JSON.parseObject(json, type);
+    }
+
+
+
+    /**
+     * 将request参数值转为json
+     */
+    public static JSONObject request2Json(HttpRequest request) {
+        JSONObject requestJson = new JSONObject();
+        MultiValueMap<String, String> requestParameter = request.getParameter();
+        for (String key:requestParameter.keySet()) {
+            List<String> stringList = requestParameter.get(key);
+            for (String s : stringList) {
+                requestJson.put(key,s);
+            }
+        }
+        return requestJson;
     }
 }
