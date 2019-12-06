@@ -29,7 +29,7 @@ public class BindServiceTest extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.e(TAG, "onStartCommand: ");
         return super.onStartCommand(intent, flags, startId);
-       
+
     }
 
     @Override
@@ -60,7 +60,7 @@ public class BindServiceTest extends Service {
         }
         public void setBinderInfo(WifiData wifiData){
             Log.i(TAG, "setBinderInfo: ");
-            wifiData.getWifiName();
+            wifiData.getWifi_name();
         }
 
     }
