@@ -19,7 +19,12 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.example.lp.ddnwebserver.Config;
+import com.example.lp.ddnwebserver.model.CameraData;
 import com.example.lp.ddnwebserver.model.CurrentSettingData;
+import com.example.lp.ddnwebserver.model.FFCData;
+import com.example.lp.ddnwebserver.model.TemperCameraData;
+import com.example.lp.ddnwebserver.model.TemperatureData;
 import com.example.lp.ddnwebserver.model.VoiceData;
 import com.example.lp.ddnwebserver.model.WifiData;
 import com.example.lp.ddnwebserver.server.CurrentConfigServer;
@@ -32,8 +37,10 @@ import com.yanzhenjie.andserver.annotation.RestController;
 import com.yanzhenjie.andserver.framework.body.StringBody;
 import com.yanzhenjie.andserver.http.HttpRequest;
 import com.yanzhenjie.andserver.http.HttpResponse;
+import com.yanzhenjie.andserver.http.RequestBody;
 import com.yanzhenjie.andserver.util.MediaType;
 
+import java.io.IOException;
 import java.util.Set;
 
 /**
@@ -69,26 +76,150 @@ public class SettingController {
     /**
      * 设置wifi信息
      * */
-    @PostMapping(path = "/set/wifi",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public void setWifiConfig(HttpRequest request,HttpResponse response){
-        //将请求转换为Json
-        JSONObject jsonObject = JsonUtils.request2Json(request);
-        Log.i("setWifiConfig", "jsonObject: "+JsonUtils.toJsonString(jsonObject));
-        WifiData wifiData = JSON.toJavaObject(jsonObject, WifiData.class);
+    @PostMapping(path = Config.setWifiRequestPath,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public WifiData setWifiConfig(RequestBody request){
+        String content = null;
+        try {
+            content = request.string();
+            Log.i("setWifiConfig", content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        WifiData wifiData = JSON.parseObject(content, WifiData.class);
         SetConfigServer.getInstance().setWifiData(wifiData);
+        return wifiData;
 
+//HttpRequest request
+//        //将请求转换为Json
+//        JSONObject jsonObject = JsonUtils.request2Json(request);
+//        Log.i("setWifiConfig", "jsonObject: "+JsonUtils.toJsonString(jsonObject));
+//        WifiData wifiData = JSON.toJavaObject(jsonObject, WifiData.class);
+//        SetConfigServer.getInstance().setWifiData(wifiData);
     }
 
     /**
      * 设置语音信息
      * */
-    @PostMapping(path = "/set/voice",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public void setVoiceConfig(HttpRequest request,HttpResponse response){
-        //将请求转换为Json
-        JSONObject jsonObject = JsonUtils.request2Json(request);
-        Log.i("setVoiceConfig", "setVoiceConfig: "+JsonUtils.toJsonString(jsonObject));
-        VoiceData voiceData = JSON.toJavaObject(jsonObject, VoiceData.class);
+    @PostMapping(path =Config.setVoiceRequestPath,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public VoiceData setVoiceConfig(RequestBody request){
+        String content = null;
+        try {
+            content = request.string();
+            Log.i("setVoiceConfig", content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        VoiceData voiceData = JSON.parseObject(content, VoiceData.class);
         SetConfigServer.getInstance().setVoiceData(voiceData);
+        return voiceData;
 
     }
+
+    /***
+    * 设置温度阀值
+    * */
+    @PostMapping(path = Config.setTemperatureRequestPath,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public TemperatureData setTemperatureConfig(RequestBody request){
+        String content = null;
+        try {
+            content = request.string();
+            Log.i("setTemperatureConfig", content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        TemperatureData temperatureData = JSON.parseObject(content, TemperatureData.class);
+        SetConfigServer.getInstance().setTemperatureData(temperatureData);
+
+        return temperatureData;
+
+    }
+    /***
+     * 设置曝光参数
+     * */
+    @PostMapping(path = Config.setExploreRequestPath,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public CameraData setCameraConfig(RequestBody request){
+        String content = null;
+        try {
+            content = request.string();
+            Log.i("setCameraConfig", content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CameraData cameraData = JSON.parseObject(content, CameraData.class);
+        SetConfigServer.getInstance().setCameraData(cameraData);
+        return cameraData;
+    }
+
+    /***
+     * 设置FFC补偿参数
+     * 可为负数
+     * */
+    @PostMapping(path = Config.setFFCCompensationRequestPath,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public FFCData setFFCcompensationConfig(RequestBody request){
+        String content = null;
+        try {
+            content = request.string();
+            Log.i("setFFCcompensation", content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        FFCData ffcData = JSON.parseObject(content, FFCData.class);
+        SetConfigServer.getInstance().setFFCData(ffcData);
+        return ffcData;
+    }
+    /***
+     * 黑体温度校准
+     * 值为参考的目标黑体温度
+     * */
+    @PostMapping(path = Config.setBlackCalibrationnRequestPath,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public FFCData setFFCalibrationConfig(RequestBody request){
+        String content = null;
+        try {
+            content = request.string();
+            Log.i("setFFCalibrationConfig", content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        FFCData ffcData = JSON.parseObject(content, FFCData.class);
+        SetConfigServer.getInstance().setFFCData(ffcData);
+        return ffcData;
+    }
+
+    /***
+     * 平均温度校准
+     * */
+    @PostMapping(path = Config.setAvgCalibrationnRequestPath,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public FFCData setFFCavgConfig(RequestBody request){
+        String content = null;
+        try {
+            content = request.string();
+            Log.i("setFFCalibrationConfig", content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        FFCData ffcData = JSON.parseObject(content, FFCData.class);
+        SetConfigServer.getInstance().setFFCData(ffcData);
+        //平均温度校准，没有参数传来，因此获得的为空，要给出返回值
+        if(ffcData==null){
+            ffcData=new FFCData();
+        }
+        return ffcData;
+    }
+    /***
+     * 设置目标距离
+     * */
+    @PostMapping(path = Config.setDistanceRequestPath,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public TemperCameraData setTempCameraConfig(RequestBody request){
+        String content = null;
+        try {
+            content = request.string();
+            Log.i("setFFCalibrationConfig", content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        TemperCameraData temperCameraData = JSON.parseObject(content, TemperCameraData.class);
+        SetConfigServer.getInstance().setTemperatureCameraData(temperCameraData);
+        return temperCameraData;
+    }
+
 }

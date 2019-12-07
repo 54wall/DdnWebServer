@@ -41,8 +41,19 @@ public class CurrentSettingData {
     @JSONField(name =Config.FFC_COMPENSATION_PARAMETER)
     private String FFC_compensation_parameter;
 
+    @JSONField(name =Config.FFC_CALIBRATION_PARAMETER)
+    private String FFC_calibration_parameter;
+
     @JSONField(name =Config.CAMERA_EXPLORE)
     private String camera_explore;
+
+    public String getFFC_calibration_parameter() {
+        return FFC_calibration_parameter;
+    }
+
+    public void setFFC_calibration_parameter(String FFC_calibration_parameter) {
+        this.FFC_calibration_parameter = FFC_calibration_parameter;
+    }
 
     public String getDevice_no() {
         return device_no;
@@ -154,6 +165,7 @@ public class CurrentSettingData {
                 ", temperature_threshold='" + temperature_threshold + '\'' +
                 ", distance='" + distance + '\'' +
                 ", FFC_compensation_parameter='" + FFC_compensation_parameter + '\'' +
+                ", FFC_calibration_parameter='" + FFC_calibration_parameter + '\'' +
                 ", camera_explore='" + camera_explore + '\'' +
                 '}';
     }

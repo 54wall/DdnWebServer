@@ -6,7 +6,9 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.example.lp.ddnwebserver.Config;
 import com.example.lp.ddnwebserver.model.WifiData;
+import com.example.lp.ddnwebserver.util.PreferencesUtils;
 
 /**
  * 测试BindService
@@ -60,7 +62,13 @@ public class BindServiceTest extends Service {
         }
         public void setBinderInfo(WifiData wifiData){
             Log.i(TAG, "setBinderInfo: ");
-            wifiData.getWifi_name();
+           String wifiname= wifiData.getWifi_name();
+           String wifipasswd= wifiData.getWifi_passwd();
+            PreferencesUtils.put(Config.WIFI_NAME,wifiname);
+            PreferencesUtils.put(Config.WIFI_PASSWD,wifipasswd);
+            Log.i(TAG, "wifiname: "+wifiname);
+            Log.i(TAG, "wifipasswd: "+wifipasswd);
+
         }
 
     }
