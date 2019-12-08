@@ -47,6 +47,84 @@ public class CurrentSettingData {
     @JSONField(name =Config.CAMERA_EXPLORE)
     private String camera_explore;
 
+
+    @JSONField(name =Config.MOVEX)
+    private String movex;
+
+    @JSONField(name =Config.MOVEY)
+    private String movey;
+
+    @JSONField(name =Config.SCALE)
+    private float scale;
+
+    @JSONField(name = Config.LINEUP)
+    private String lineUp;
+
+    @JSONField(name = Config.LINELEFT)
+    private String lineLeft;
+
+    @JSONField(name = Config.LINEDWON)
+    private String lineDown;
+
+    @JSONField(name = Config.LINERIGHT)
+    private String lineRight;
+
+    public String getLineUp() {
+        return lineUp;
+    }
+
+    public void setLineUp(String lineUp) {
+        this.lineUp = lineUp;
+    }
+
+    public String getLineLeft() {
+        return lineLeft;
+    }
+
+    public void setLineLeft(String lineLeft) {
+        this.lineLeft = lineLeft;
+    }
+
+    public String getLineDown() {
+        return lineDown;
+    }
+
+    public void setLineDown(String lineDown) {
+        this.lineDown = lineDown;
+    }
+
+    public String getLineRight() {
+        return lineRight;
+    }
+
+    public void setLineRight(String lineRight) {
+        this.lineRight = lineRight;
+    }
+
+    public String getMovex() {
+        return movex;
+    }
+
+    public void setMovex(String movex) {
+        this.movex = movex;
+    }
+
+    public String getMovey() {
+        return movey;
+    }
+
+    public void setMovey(String movey) {
+        this.movey = movey;
+    }
+
+    public float getScale() {
+        return scale;
+    }
+
+    public void setScale(float scale) {
+        this.scale = scale;
+    }
+
     public String getFFC_calibration_parameter() {
         return FFC_calibration_parameter;
     }
@@ -167,6 +245,13 @@ public class CurrentSettingData {
                 ", FFC_compensation_parameter='" + FFC_compensation_parameter + '\'' +
                 ", FFC_calibration_parameter='" + FFC_calibration_parameter + '\'' +
                 ", camera_explore='" + camera_explore + '\'' +
+                ", movex='" + movex + '\'' +
+                ", movey='" + movey + '\'' +
+                ", scale=" + scale +
+                ", lineUp='" + lineUp + '\'' +
+                ", lineLeft='" + lineLeft + '\'' +
+                ", lineDown='" + lineDown + '\'' +
+                ", lineRight='" + lineRight + '\'' +
                 '}';
     }
 }

@@ -18,13 +18,17 @@ package com.example.lp.ddnwebserver.controller;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.example.lp.ddnwebserver.Config;
+import com.example.lp.ddnwebserver.model.CalibratPositionData;
 import com.example.lp.ddnwebserver.model.CameraData;
 import com.example.lp.ddnwebserver.model.CurrentSettingData;
 import com.example.lp.ddnwebserver.model.FFCData;
+import com.example.lp.ddnwebserver.model.PictureData;
+import com.example.lp.ddnwebserver.model.RecordQueryRequest;
+import com.example.lp.ddnwebserver.model.ReturnData;
 import com.example.lp.ddnwebserver.model.TemperCameraData;
 import com.example.lp.ddnwebserver.model.TemperatureData;
+import com.example.lp.ddnwebserver.model.ValidAreaData;
 import com.example.lp.ddnwebserver.model.VoiceData;
 import com.example.lp.ddnwebserver.model.WifiData;
 import com.example.lp.ddnwebserver.server.CurrentConfigServer;
@@ -35,13 +39,11 @@ import com.yanzhenjie.andserver.annotation.PostMapping;
 import com.yanzhenjie.andserver.annotation.RequestMapping;
 import com.yanzhenjie.andserver.annotation.RestController;
 import com.yanzhenjie.andserver.framework.body.StringBody;
-import com.yanzhenjie.andserver.http.HttpRequest;
 import com.yanzhenjie.andserver.http.HttpResponse;
 import com.yanzhenjie.andserver.http.RequestBody;
 import com.yanzhenjie.andserver.util.MediaType;
 
 import java.io.IOException;
-import java.util.Set;
 
 /**
  * 设置界面控制器
@@ -193,7 +195,7 @@ public class SettingController {
         String content = null;
         try {
             content = request.string();
-            Log.i("setFFCalibrationConfig", content);
+            Log.i("setFFCavgConfig", content);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -213,13 +215,89 @@ public class SettingController {
         String content = null;
         try {
             content = request.string();
-            Log.i("setFFCalibrationConfig", content);
+            Log.i("setTempCameraConfig", content);
         } catch (IOException e) {
             e.printStackTrace();
         }
         TemperCameraData temperCameraData = JSON.parseObject(content, TemperCameraData.class);
         SetConfigServer.getInstance().setTemperatureCameraData(temperCameraData);
         return temperCameraData;
+    }
+
+    /***
+     * 获取预览图片路径
+     * */
+    @PostMapping(path = Config.getPhotoPreviewRequestPath,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public PictureData previewTempPath(RequestBody request){
+        Log.i("previewTempPath", "获取预览图片路径: ");
+        PictureData pictureData = SetConfigServer.getInstance().getPictureData();
+        return pictureData;
+    }
+
+    /***
+     * 校准红外定位框
+     * */
+    @PostMapping(path = Config.setTemperLoactionRequestPath,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ReturnData calibrationLoaction(RequestBody request){
+        String content = null;
+        try {
+            content = request.string();
+            Log.i("calibrationLoaction", content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CalibratPositionData calibratPositionData=JSON.parseObject(content,CalibratPositionData.class);
+        if(calibratPositionData!=null){
+            SetConfigServer.getInstance().setCalibratPosition(calibratPositionData);
+        }
+        return new ReturnData();
+    }
+
+    /***
+     * 获取有效区域预览
+     * */
+    @PostMapping(path = Config.getValidAreaRequestPath,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ValidAreaData getValidArea(RequestBody request){
+        Log.i("getValidArea", "获取有效区域预览: ");
+        ValidAreaData validAreaData = SetConfigServer.getInstance().getValidAreaData();
+        return validAreaData;
+    }
+
+    /***
+     * 设置有效区域预览
+     * */
+    @PostMapping(path = Config.setValidAreaRequestPath,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ValidAreaData setValidArea(RequestBody request){
+        Log.i("setValidArea", "设置有效区域预览: ");
+        String content = null;
+        try {
+            content = request.string();
+            Log.i("setValidArea", content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ValidAreaData validAreaData = JSON.parseObject(content,ValidAreaData.class);
+        if(validAreaData!=null){
+            SetConfigServer.getInstance().setValidAreaData(validAreaData);
+        }
+        return validAreaData;
+    }
+    /***
+     * 获取所有图片数据
+     * */
+    @PostMapping(path = Config.queryDataRequestPath,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public void getPhotodata(RequestBody request){
+        Log.i("getPhotodata", "获取所有图片数据: ");
+        String content = null;
+        try {
+            content = request.string();
+            Log.i("getPhotodata", content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        RecordQueryRequest recordQueryRequest=JSON.parseObject(content,RecordQueryRequest.class);
+
+
     }
 
 }

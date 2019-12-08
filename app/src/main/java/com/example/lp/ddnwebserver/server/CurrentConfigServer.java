@@ -1,5 +1,6 @@
 package com.example.lp.ddnwebserver.server;
 
+import com.example.lp.ddnwebserver.Config;
 import com.example.lp.ddnwebserver.model.CurrentSettingData;
 import com.example.lp.ddnwebserver.util.JsonUtils;
 import com.example.lp.ddnwebserver.util.PreferencesUtils;
@@ -47,6 +48,13 @@ public class CurrentConfigServer {
         currentSettingData.setTemperature_threshold(PreferencesUtils.getString(TEMPERATURE_THRESHOLD,"30"));
         currentSettingData.setVoice_speed(PreferencesUtils.getString(VOICE_SPEED,"1.0"));
         currentSettingData.setVersion_name(PreferencesUtils.getString(VERSION_NAME,"1.1.0"));
+        currentSettingData.setMovex(PreferencesUtils.getString(Config.MOVEX,"0"));
+        currentSettingData.setMovey(PreferencesUtils.getString(Config.MOVEY,"0"));
+        currentSettingData.setScale(PreferencesUtils.getFloat(Config.SCALE,1));
+        currentSettingData.setLineUp(PreferencesUtils.getString(Config.LINEUP,"20"));
+        currentSettingData.setLineLeft(PreferencesUtils.getString(Config.LINELEFT,"20"));
+        currentSettingData.setLineDown(PreferencesUtils.getString(Config.LINEDWON,"620"));
+        currentSettingData.setLineRight(PreferencesUtils.getString(Config.LINERIGHT,"450"));
         currentSettingData.toString();
         return currentSettingData;
     }

@@ -9,10 +9,13 @@ import android.util.Log;
 
 import com.example.lp.ddnwebserver.Config;
 import com.example.lp.ddnwebserver.MyApplication;
+import com.example.lp.ddnwebserver.model.CalibratPositionData;
 import com.example.lp.ddnwebserver.model.CameraData;
 import com.example.lp.ddnwebserver.model.FFCData;
+import com.example.lp.ddnwebserver.model.PictureData;
 import com.example.lp.ddnwebserver.model.TemperCameraData;
 import com.example.lp.ddnwebserver.model.TemperatureData;
+import com.example.lp.ddnwebserver.model.ValidAreaData;
 import com.example.lp.ddnwebserver.model.VoiceData;
 import com.example.lp.ddnwebserver.model.WifiData;
 import com.example.lp.ddnwebserver.service.BindServiceTest;
@@ -133,6 +136,67 @@ public class SetConfigServer {
         }
     }
 
+
+    /**
+     * 获取图片路径
+     * 人脸定位
+     * */
+    public PictureData getPictureData() {
+        PictureData pictureData =new PictureData();
+        pictureData.setPersonPath(Config.person_path);
+        pictureData.setTemperPath(Config.temper_path);
+        pictureData.setX1("198");
+        pictureData.setY1("94");
+
+        pictureData.setX2("292");
+        pictureData.setY2("107");
+
+        pictureData.setX3("292");
+        pictureData.setY3("192");
+
+        pictureData.setX4("198");
+        pictureData.setY4("192");
+
+        pictureData.setMoveX(PreferencesUtils.getString(Config.MOVEX,"0"));
+        pictureData.setMoveY(PreferencesUtils.getString(Config.MOVEY,"0"));
+        pictureData.setScale(PreferencesUtils.getFloat(Config.SCALE,1));
+        return pictureData;
+    }
+
+
+    /**
+     * 设置红外位置校准信息
+     * */
+    public void setCalibratPosition(CalibratPositionData calibratPositionData) {
+        /*存入SP*/
+        /*直接修改配置*/
+        PreferencesUtils.put(Config.MOVEX,calibratPositionData.getMoveX());
+        PreferencesUtils.put(Config.MOVEY,calibratPositionData.getMoveY());
+        PreferencesUtils.put(Config.SCALE,calibratPositionData.getScale());
+        Log.i(TAG, "setCalibratPosition: "+calibratPositionData.toString());
+    }
+
+    /**
+     * 获取有效区域信息
+     * */
+    public ValidAreaData getValidAreaData() {
+        ValidAreaData validAreaData=new ValidAreaData();
+        validAreaData.setLineUp(PreferencesUtils.getString(Config.LINEUP,"20"));
+        validAreaData.setLineLeft(PreferencesUtils.getString(Config.LINELEFT,"20"));
+        validAreaData.setLineDown(PreferencesUtils.getString(Config.LINEDWON,"620"));
+        validAreaData.setLineRight(PreferencesUtils.getString(Config.LINERIGHT,"450"));
+        return validAreaData;
+    }
+    /**
+     * 设置有效区域信息
+     * */
+    public void setValidAreaData(ValidAreaData validAreaData) {
+        PreferencesUtils.put(Config.LINEUP,validAreaData.getLineUp());
+        PreferencesUtils.put(Config.LINELEFT,validAreaData.getLineLeft());
+        PreferencesUtils.put(Config.LINEDWON,validAreaData.getLineDown());
+        PreferencesUtils.put(Config.LINERIGHT,validAreaData.getLineRight());
+        Log.i(TAG, "setValidAreaData: "+validAreaData);
+    }
 
 
     ServiceConnection connection=new ServiceConnection() {

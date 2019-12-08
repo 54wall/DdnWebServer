@@ -19,7 +19,47 @@ public interface Config {
     String FFC_CALIBRATION_PARAMETER="ffc_calibration_parameter";
     String CAMERA_EXPLORE="camera_explore";
 
+    //人脸框定位字段
+    String LoactionX1="loaction_x_1";
+    String LoactionX2="loaction_x_2";
+    String LoactionX3="loaction_x_3";
+    String LoactionX4="loaction_x_4";
+    String LoactionY1="loaction_y_1";
+    String LoactionY2="loaction_y_2";
+    String LoactionY3="loaction_y_3";
+    String LoactionY4="loaction_y_4";
 
+    //红外框位置
+    String MOVEX="move_x";
+    String MOVEY="move_y";
+    String SCALE="scale";
+
+    //有效区域线条位置
+    String LINEUP="line_up";
+    String LINELEFT="line_left";
+    String LINERIGHT="line_right";
+    String LINEDWON="line_down";
+
+
+    String TEMPERPATH="temper_path";
+    String PERSONPATH="person_path";
+
+
+    //图片数据字段名
+    String PERSONRECODPATH="person_recodpath";
+    String TEMPERRECODPATH="temper_recodpath";
+    String DATA="data";
+    String TEMP="temp";
+
+    //图片筛选字段名
+    String RECORDDATALIST="recordlist";
+    String CURRENTPAGE="current_page";
+    String EVERPAGENUMBER="everpagenumber";
+    String ALLDATANUMBER="alldatanumber";
+    String STARTIME="start_time";
+    String ENDTIME="end_time";
+    String MINTEMP="min_temp";
+    String MATEMP="mac_temp";
 
     //api路径
     //设置wifi
@@ -38,6 +78,29 @@ public interface Config {
     String setAvgCalibrationnRequestPath="/set/FFC_avg_calibrationn";
     //设置距离
     String setDistanceRequestPath= "/set/temper_distance";
+
+    //获取图片预览信息
+    String getPhotoPreviewRequestPath= "/set/photo_preview";
+    //设置红外校准定位信息
+    String setTemperLoactionRequestPath= "/set/temp_location";
+
+    //有效区域信息
+    String getValidAreaRequestPath= "/set/get_valid_area";
+    String setValidAreaRequestPath= "/set/set_valid_area";
+
+    //查询信息
+
+    String queryDataRequestPath= "/set/query_data";
+
+
+
+
+
+    /*测试图片路径*/
+//    String person_path="/sdcard/DCIM/person.png";
+//    String temper_path="/sdcard/DCIM/temper.png";
+    String person_path="https://image-didanuo.oss-cn-shenzhen.aliyuncs.com/person.png";
+    String temper_path="https://image-didanuo.oss-cn-shenzhen.aliyuncs.com/temper.png";
 
 
 
