@@ -43,6 +43,7 @@ public class AppMessageConverter implements MessageConverter {
     @Override
     public ResponseBody convert(@NonNull Object output, @Nullable MediaType mediaType) {
         Log.i("AppMessageConverter", "MessageConverter: ");
+        Log.i("AppMessageConverter", JsonUtils.successfulJson(output));
         return new JsonBody(JsonUtils.successfulJson(output));
     }
 

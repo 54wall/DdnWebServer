@@ -3,6 +3,8 @@ package com.example.lp.ddnwebserver.model;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.example.lp.ddnwebserver.Config;
 
+import java.util.Date;
+
 /**
  * 条件查询请求数据
  * */
@@ -18,9 +20,9 @@ public class RecordQueryRequest {
 
     //过滤条件
     @JSONField(name = Config.STARTIME)
-    private String starTime;
+    private Date starTime;
     @JSONField(name = Config.ENDTIME)
-    private String endTime;
+    private Date endTime;
     @JSONField(name = Config.MINTEMP)
     private String minTemp;
     @JSONField(name = Config.MATEMP)
@@ -42,19 +44,19 @@ public class RecordQueryRequest {
         this.everPageNumber = everPageNumber;
     }
 
-    public String getStarTime() {
+    public Date getStarTime() {
         return starTime;
     }
 
-    public void setStarTime(String starTime) {
+    public void setStarTime(Date starTime) {
         this.starTime = starTime;
     }
 
-    public String getEndTime() {
+    public Date getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 
@@ -74,15 +76,4 @@ public class RecordQueryRequest {
         this.maxTemp = maxTemp;
     }
 
-    @Override
-    public String toString() {
-        return "RecordQueryRequest{" +
-                "currentpage=" + currentpage +
-                ", everPageNumber=" + everPageNumber +
-                ", starTime='" + starTime + '\'' +
-                ", endTime='" + endTime + '\'' +
-                ", minTemp='" + minTemp + '\'' +
-                ", maxTemp='" + maxTemp + '\'' +
-                '}';
-    }
 }

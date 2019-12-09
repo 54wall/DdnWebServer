@@ -48,18 +48,18 @@ public interface Config {
     //图片数据字段名
     String PERSONRECODPATH="person_recodpath";
     String TEMPERRECODPATH="temper_recodpath";
-    String DATA="data";
+    String DATA="date";
     String TEMP="temp";
 
     //图片筛选字段名
-    String RECORDDATALIST="recordlist";
+    String DATALIST="data_list";
+    String ALLSIZE="all_size";
     String CURRENTPAGE="current_page";
     String EVERPAGENUMBER="everpagenumber";
-    String ALLDATANUMBER="alldatanumber";
     String STARTIME="start_time";
     String ENDTIME="end_time";
     String MINTEMP="min_temp";
-    String MATEMP="mac_temp";
+    String MATEMP="max_temp";
 
     //api路径
     //设置wifi

@@ -19,10 +19,12 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.example.lp.ddnwebserver.Config;
+import com.example.lp.ddnwebserver.database.PhotoRecordDb;
 import com.example.lp.ddnwebserver.model.CalibratPositionData;
 import com.example.lp.ddnwebserver.model.CameraData;
 import com.example.lp.ddnwebserver.model.CurrentSettingData;
 import com.example.lp.ddnwebserver.model.FFCData;
+import com.example.lp.ddnwebserver.model.PhotoDataRespons;
 import com.example.lp.ddnwebserver.model.PictureData;
 import com.example.lp.ddnwebserver.model.RecordQueryRequest;
 import com.example.lp.ddnwebserver.model.ReturnData;
@@ -44,6 +46,7 @@ import com.yanzhenjie.andserver.http.RequestBody;
 import com.yanzhenjie.andserver.util.MediaType;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * 设置界面控制器
@@ -77,9 +80,9 @@ public class SettingController {
 
     /**
      * 设置wifi信息
-     * */
-    @PostMapping(path = Config.setWifiRequestPath,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public WifiData setWifiConfig(RequestBody request){
+     */
+    @PostMapping(path = Config.setWifiRequestPath, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public WifiData setWifiConfig(RequestBody request) {
         String content = null;
         try {
             content = request.string();
@@ -101,9 +104,9 @@ public class SettingController {
 
     /**
      * 设置语音信息
-     * */
-    @PostMapping(path =Config.setVoiceRequestPath,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public VoiceData setVoiceConfig(RequestBody request){
+     */
+    @PostMapping(path = Config.setVoiceRequestPath, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public VoiceData setVoiceConfig(RequestBody request) {
         String content = null;
         try {
             content = request.string();
@@ -118,10 +121,10 @@ public class SettingController {
     }
 
     /***
-    * 设置温度阀值
-    * */
-    @PostMapping(path = Config.setTemperatureRequestPath,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public TemperatureData setTemperatureConfig(RequestBody request){
+     * 设置温度阀值
+     * */
+    @PostMapping(path = Config.setTemperatureRequestPath, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public TemperatureData setTemperatureConfig(RequestBody request) {
         String content = null;
         try {
             content = request.string();
@@ -135,11 +138,12 @@ public class SettingController {
         return temperatureData;
 
     }
+
     /***
      * 设置曝光参数
      * */
-    @PostMapping(path = Config.setExploreRequestPath,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public CameraData setCameraConfig(RequestBody request){
+    @PostMapping(path = Config.setExploreRequestPath, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public CameraData setCameraConfig(RequestBody request) {
         String content = null;
         try {
             content = request.string();
@@ -156,8 +160,8 @@ public class SettingController {
      * 设置FFC补偿参数
      * 可为负数
      * */
-    @PostMapping(path = Config.setFFCCompensationRequestPath,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public FFCData setFFCcompensationConfig(RequestBody request){
+    @PostMapping(path = Config.setFFCCompensationRequestPath, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public FFCData setFFCcompensationConfig(RequestBody request) {
         String content = null;
         try {
             content = request.string();
@@ -169,12 +173,13 @@ public class SettingController {
         SetConfigServer.getInstance().setFFCData(ffcData);
         return ffcData;
     }
+
     /***
      * 黑体温度校准
      * 值为参考的目标黑体温度
      * */
-    @PostMapping(path = Config.setBlackCalibrationnRequestPath,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public FFCData setFFCalibrationConfig(RequestBody request){
+    @PostMapping(path = Config.setBlackCalibrationnRequestPath, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public FFCData setFFCalibrationConfig(RequestBody request) {
         String content = null;
         try {
             content = request.string();
@@ -190,8 +195,8 @@ public class SettingController {
     /***
      * 平均温度校准
      * */
-    @PostMapping(path = Config.setAvgCalibrationnRequestPath,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public FFCData setFFCavgConfig(RequestBody request){
+    @PostMapping(path = Config.setAvgCalibrationnRequestPath, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public FFCData setFFCavgConfig(RequestBody request) {
         String content = null;
         try {
             content = request.string();
@@ -202,16 +207,17 @@ public class SettingController {
         FFCData ffcData = JSON.parseObject(content, FFCData.class);
         SetConfigServer.getInstance().setFFCData(ffcData);
         //平均温度校准，没有参数传来，因此获得的为空，要给出返回值
-        if(ffcData==null){
-            ffcData=new FFCData();
+        if (ffcData == null) {
+            ffcData = new FFCData();
         }
         return ffcData;
     }
+
     /***
      * 设置目标距离
      * */
-    @PostMapping(path = Config.setDistanceRequestPath,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public TemperCameraData setTempCameraConfig(RequestBody request){
+    @PostMapping(path = Config.setDistanceRequestPath, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public TemperCameraData setTempCameraConfig(RequestBody request) {
         String content = null;
         try {
             content = request.string();
@@ -227,8 +233,8 @@ public class SettingController {
     /***
      * 获取预览图片路径
      * */
-    @PostMapping(path = Config.getPhotoPreviewRequestPath,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public PictureData previewTempPath(RequestBody request){
+    @PostMapping(path = Config.getPhotoPreviewRequestPath, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public PictureData previewTempPath(RequestBody request) {
         Log.i("previewTempPath", "获取预览图片路径: ");
         PictureData pictureData = SetConfigServer.getInstance().getPictureData();
         return pictureData;
@@ -237,8 +243,8 @@ public class SettingController {
     /***
      * 校准红外定位框
      * */
-    @PostMapping(path = Config.setTemperLoactionRequestPath,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ReturnData calibrationLoaction(RequestBody request){
+    @PostMapping(path = Config.setTemperLoactionRequestPath, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ReturnData calibrationLoaction(RequestBody request) {
         String content = null;
         try {
             content = request.string();
@@ -246,8 +252,8 @@ public class SettingController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        CalibratPositionData calibratPositionData=JSON.parseObject(content,CalibratPositionData.class);
-        if(calibratPositionData!=null){
+        CalibratPositionData calibratPositionData = JSON.parseObject(content, CalibratPositionData.class);
+        if (calibratPositionData != null) {
             SetConfigServer.getInstance().setCalibratPosition(calibratPositionData);
         }
         return new ReturnData();
@@ -256,8 +262,8 @@ public class SettingController {
     /***
      * 获取有效区域预览
      * */
-    @PostMapping(path = Config.getValidAreaRequestPath,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ValidAreaData getValidArea(RequestBody request){
+    @PostMapping(path = Config.getValidAreaRequestPath, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ValidAreaData getValidArea(RequestBody request) {
         Log.i("getValidArea", "获取有效区域预览: ");
         ValidAreaData validAreaData = SetConfigServer.getInstance().getValidAreaData();
         return validAreaData;
@@ -266,8 +272,8 @@ public class SettingController {
     /***
      * 设置有效区域预览
      * */
-    @PostMapping(path = Config.setValidAreaRequestPath,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ValidAreaData setValidArea(RequestBody request){
+    @PostMapping(path = Config.setValidAreaRequestPath, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ValidAreaData setValidArea(RequestBody request) {
         Log.i("setValidArea", "设置有效区域预览: ");
         String content = null;
         try {
@@ -276,17 +282,18 @@ public class SettingController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ValidAreaData validAreaData = JSON.parseObject(content,ValidAreaData.class);
-        if(validAreaData!=null){
+        ValidAreaData validAreaData = JSON.parseObject(content, ValidAreaData.class);
+        if (validAreaData != null) {
             SetConfigServer.getInstance().setValidAreaData(validAreaData);
         }
         return validAreaData;
     }
+
     /***
      * 获取所有图片数据
      * */
-    @PostMapping(path = Config.queryDataRequestPath,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public void getPhotodata(RequestBody request){
+    @PostMapping(path = Config.queryDataRequestPath, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public PhotoDataRespons getPhotodata(RequestBody request) {
         Log.i("getPhotodata", "获取所有图片数据: ");
         String content = null;
         try {
@@ -295,9 +302,14 @@ public class SettingController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        RecordQueryRequest recordQueryRequest=JSON.parseObject(content,RecordQueryRequest.class);
 
-
+        PhotoDataRespons respons = new PhotoDataRespons();
+        RecordQueryRequest recordQueryRequest = JSON.parseObject(content, RecordQueryRequest.class);
+        if (recordQueryRequest != null) {
+            respons = SetConfigServer.getInstance().queryRecord(recordQueryRequest);
+            return respons;
+        }
+        return respons;
     }
 
 }

@@ -1,20 +1,22 @@
-package com.example.lp.ddnwebserver.model;
+package com.example.lp.ddnwebserver.database;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.example.lp.ddnwebserver.Config;
 
+import org.litepal.crud.LitePalSupport;
+
 /**
- * 记录数据
+ * 照片记录数据
  * */
-public class RecordData {
-    @JSONField(name = Config.PERSONRECODPATH)
+public class PhotoRecordDb  extends LitePalSupport{
+
     private String personPath;
-    @JSONField(name = Config.TEMPERRECODPATH)
+
     private String temperPath;
-    @JSONField(name = Config.DATA)
-    private String data;
-    @JSONField(name = Config.TEMP)
-    private String temp;
+
+    private Long date;
+
+    private Integer temp;
 
     public String getPersonPath() {
         return personPath;
@@ -32,29 +34,31 @@ public class RecordData {
         this.temperPath = temperPath;
     }
 
-    public String getData() {
-        return data;
-    }
 
-    public void setData(String data) {
-        this.data = data;
-    }
 
-    public String getTemp() {
+    public Integer getTemp() {
         return temp;
     }
 
-    public void setTemp(String temp) {
+    public void setTemp(Integer temp) {
         this.temp = temp;
+    }
+
+    public Long getDate() {
+        return date;
+    }
+
+    public void setDate(Long date) {
+        this.date = date;
     }
 
     @Override
     public String toString() {
-        return "RecordData{" +
+        return "PhotoRecordDb{" +
                 "personPath='" + personPath + '\'' +
                 ", temperPath='" + temperPath + '\'' +
-                ", data='" + data + '\'' +
-                ", temp='" + temp + '\'' +
+                ", date=" + date +
+                ", temp=" + temp +
                 '}';
     }
 }
