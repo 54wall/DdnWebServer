@@ -222,13 +222,21 @@ public class SetConfigServer {
         List<PhotoRecordDb> photoRecordDbList = null;
         //统计条件查询的数量
         List<PhotoRecordDb> countSizeList = null;
-        //判断是否有
+        //排序条件 asc为升序，desc为降序。
+        String orders = "date asc";
+        if (recordQueryRequest.getOrders() != null) {
+            orders = recordQueryRequest.getOrders();
+            Log.i(TAG, "queryRecord:orders " + orders);
+        }
+        //判断是否有时间条件，如果没有时间则默认为查询所有
         if (recordQueryRequest.getStarTime() == null) {
             photoRecordDbList = LitePal.select("personPath", "temperPath", "date", "temp")
                     .where(" temp>=" + recordQueryRequest.getMinTemp() + " and temp<=" + recordQueryRequest.getMaxTemp())
                     .limit(recordQueryRequest.getEverPageNumber())
                     .offset((recordQueryRequest.getCurrentpage() - 1) * recordQueryRequest.getEverPageNumber())
+                    .order(orders)
                     .find(PhotoRecordDb.class);
+
             countSizeList = LitePal.select("personPath", "temperPath", "date", "temp")
                     .where(" temp>=" + recordQueryRequest.getMinTemp() + " and temp<=" + recordQueryRequest.getMaxTemp())
                     .find(PhotoRecordDb.class);
@@ -241,7 +249,9 @@ public class SetConfigServer {
                             " and temp<=" + recordQueryRequest.getMaxTemp())
                     .limit(recordQueryRequest.getEverPageNumber())
                     .offset((recordQueryRequest.getCurrentpage() - 1) * recordQueryRequest.getEverPageNumber())
+                    .order(orders)
                     .find(PhotoRecordDb.class);
+
             countSizeList = LitePal.select("personPath", "temperPath", "date", "temp")
                     .where("date>=" + TimeUtils.getDatatoString(recordQueryRequest.getStarTime()) +
                             " and date<=" + TimeUtils.getDatatoString(recordQueryRequest.getEndTime()) +
@@ -250,7 +260,7 @@ public class SetConfigServer {
                     .find(PhotoRecordDb.class);
         }
 
-        Log.i(TAG, "queryRecord: " + photoRecordDbList.size());
+        Log.i(TAG, "queryRecord: " + countSizeList.size());
         //要把数据的数量包裹一起发过去
         PhotoDataRespons respons = new PhotoDataRespons();
         respons.setPhotoRecordDbList(photoRecordDbList);

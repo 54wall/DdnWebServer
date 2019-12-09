@@ -60,6 +60,7 @@ public interface Config {
     String ENDTIME="end_time";
     String MINTEMP="min_temp";
     String MATEMP="max_temp";
+    String ORDERS="orders";
 
     //api路径
     //设置wifi

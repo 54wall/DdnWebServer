@@ -28,6 +28,18 @@ public class RecordQueryRequest {
     @JSONField(name = Config.MATEMP)
     private String maxTemp;
 
+    //排序条件
+    @JSONField(name = Config.ORDERS)
+    private String orders;
+
+    public String getOrders() {
+        return orders;
+    }
+
+    public void setOrders(String orders) {
+        this.orders = orders;
+    }
+
     public int getCurrentpage() {
         return currentpage;
     }
@@ -76,4 +88,16 @@ public class RecordQueryRequest {
         this.maxTemp = maxTemp;
     }
 
+    @Override
+    public String toString() {
+        return "RecordQueryRequest{" +
+                "currentpage=" + currentpage +
+                ", everPageNumber=" + everPageNumber +
+                ", starTime=" + starTime +
+                ", endTime=" + endTime +
+                ", minTemp='" + minTemp + '\'' +
+                ", maxTemp='" + maxTemp + '\'' +
+                ", orders='" + orders + '\'' +
+                '}';
+    }
 }
